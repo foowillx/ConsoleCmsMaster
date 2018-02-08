@@ -1,0 +1,54 @@
+﻿@model ConsoleCMS.Models.ViewModels.vmInsights
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="col-xs-12 col-sm-12 col-md-6" data-key="">
+    @foreach (var reg in Model.listGraphs)
+    {
+        <div class="@reg.Lon col-xs-6 col-sm-6 col-md-5 col-md-offset-1 text-center">
+            <img src="@reg.Lat" width="40" height="40" class="insights-info-icon img-graf" />
+            <div class="insights-info-content">
+                <div class="insights-info-val">@reg.Item</div>
+                <div class="insights-info-label">@reg.Value</div>
+            </div>
+        </div>
+        <div class="insights_info_element_bottom"></div>
+    }
+    
+</div>
+<div class="col-xs-12 col-sm-12 col-md-6">
+    @Html.Partial("Partials/_Mapa") <br />
+    <br /></div>
+
+<div class="col-xs-12 col-sm-12 col-md-6">
+    @Html.Partial("Partials/_ChartOne")
+</div>
+<div class="col-xs-12 col-sm-12 col-md-6">
+    @Html.Partial("Partials/_ChartTwo")<br /><br />
+</div>
+<div class="col-xs-12 col-sm-12 col-md-6">
+    @Html.Partial("Partials/_ChartThree")
+</div>
+<div class="col-xs-12 col-sm-12 col-md-6">
+    @Html.Partial("Partials/_ChartFour")<br /><br />
+</div>
+<div class="col-xs-12 col-sm-12 col-md-6">
+    @Html.Partial("Partials/_ChartFive")
+</div>
+<div class="col-xs-12 col-sm-12 col-md-6">
+    @Html.Partial("Partials/_ChartSix")<br /><br />
+</div>
+<div class="col-xs-12 col-sm-12 col-md-6">
+    @Html.Partial("Partials/_ChartSeven")
+</div>
+<div class="col-xs-12 col-sm-12 col-md-6">
+    @Html.Partial("Partials/_ChartEight")<br /><br />
+</div>
+<div class="col-xs-12 col-sm-12 col-md-6">
+    @Html.Partial("Partials/_ChartNine")
+</div>
+<div class="col-xs-12 col-sm-12 col-md-6">
+    @Html.Partial("Partials/_ChartTen")<br /><br />
+</div>

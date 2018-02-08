@@ -1,0 +1,910 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ConsoleCmsMasterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AppTokens">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="Flags" Type="int" Nullable="false" />
+          <Property Name="Token" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Secret" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="ExpiresAt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AppUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateId" Type="bigint" Nullable="false" />
+          <Property Name="FbId" Type="varchar" MaxLength="500" />
+          <Property Name="Audience" Type="int" Nullable="false" />
+          <Property Name="IsInterested" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="LastNames" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Mail" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="64" />
+          <Property Name="Extension" Type="varchar" MaxLength="10" />
+          <Property Name="ChildrenCount" Type="int" Nullable="false" />
+          <Property Name="LocationCount" Type="int" Nullable="false" />
+          <Property Name="LockedAt" Type="datetime" />
+          <Property Name="FechaRegistro" Type="datetime" />
+          <Property Name="FechaAviso" Type="datetime" />
+          <Property Name="EsTitular" Type="bit" />
+          <Property Name="IsBlocked" Type="int" />
+          <Property Name="ChildrenCount05x" Type="int" />
+          <Property Name="ChildrenCount68x" Type="int" />
+          <Property Name="ChildrenCount912x" Type="int" />
+          <Property Name="ChildrenCount12xx" Type="int" />
+        </EntityType>
+        <EntityType Name="ASPStateTempApplications">
+          <Key>
+            <PropertyRef Name="AppId" />
+          </Key>
+          <Property Name="AppId" Type="int" Nullable="false" />
+          <Property Name="AppName" Type="char" MaxLength="280" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ASPStateTempSessions">
+          <Key>
+            <PropertyRef Name="SessionId" />
+          </Key>
+          <Property Name="SessionId" Type="nvarchar" MaxLength="88" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="Expires" Type="datetime" Nullable="false" />
+          <Property Name="LockDate" Type="datetime" Nullable="false" />
+          <Property Name="LockDateLocal" Type="datetime" Nullable="false" />
+          <Property Name="LockCookie" Type="int" Nullable="false" />
+          <Property Name="Timeout" Type="int" Nullable="false" />
+          <Property Name="Locked" Type="bit" Nullable="false" />
+          <Property Name="SessionItemShort" Type="varbinary" MaxLength="7000" />
+          <Property Name="SessionItemLong" Type="image" />
+          <Property Name="Flags" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Color" Type="int" />
+        </EntityType>
+        <EntityType Name="ChangeLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppUserId" Type="bigint" />
+          <Property Name="DateAction" Type="datetime" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="CodigosPostales">
+          <Key>
+            <PropertyRef Name="IdCodigo" />
+          </Key>
+          <Property Name="IdCodigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Codigo" Type="nvarchar(max)" />
+          <Property Name="Asentamiento" Type="nvarchar(max)" />
+          <Property Name="d_tipo_asenta" Type="nvarchar(max)" />
+          <Property Name="Municipio" Type="nvarchar(max)" />
+          <Property Name="Estado" Type="nvarchar(max)" />
+          <Property Name="d_CP" Type="nvarchar(max)" />
+          <Property Name="c_estado" Type="nvarchar(max)" />
+          <Property Name="c_oficina" Type="nvarchar(max)" />
+          <Property Name="c_CP" Type="nvarchar(max)" />
+          <Property Name="c_tipo_asenta" Type="nvarchar(max)" />
+          <Property Name="c_mnpio" Type="nvarchar(max)" />
+          <Property Name="id_asenta_cpcons" Type="nvarchar(max)" />
+          <Property Name="d_zona" Type="nvarchar(max)" />
+          <Property Name="c_cve_ciudad" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ContactRequests">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateId" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="MiddleName" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Profession" Type="varchar" MaxLength="100" />
+          <Property Name="Mail" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Comment" Type="text" Nullable="false" />
+          <Property Name="IsInterested" Type="int" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Contents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SigninRequired" Type="int" />
+          <Property Name="Audience" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="text" Nullable="false" />
+          <Property Name="Extension" Type="varchar" MaxLength="10" />
+          <Property Name="ThumbExtension" Type="varchar" MaxLength="10" />
+          <Property Name="SmallThumbExtension" Type="varchar" MaxLength="10" />
+          <Property Name="PublishedAt" Type="datetime" Nullable="false" />
+          <Property Name="Description" Type="text" />
+          <Property Name="Published" Type="bit" />
+        </EntityType>
+        <EntityType Name="Posts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Audience" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="bigint" Nullable="false" />
+          <Property Name="IsActive" Type="int" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Abstract" Type="text" Nullable="false" />
+          <Property Name="Post" Type="text" Nullable="false" />
+          <Property Name="PublishedAt" Type="datetime" Nullable="false" />
+          <Property Name="Extension" Type="varchar" MaxLength="10" />
+          <Property Name="Published" Type="bit" />
+        </EntityType>
+        <EntityType Name="States">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Tokens">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Flags" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="Token" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Secret" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="ExpiresAt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserProgress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppUserId" Type="int" Nullable="false" />
+          <Property Name="Step" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="LastNames" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Mail" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="LockedAt" Type="datetime" />
+          <Property Name="Type" Type="varchar" MaxLength="100" />
+          <Property Name="LastLogin" Type="datetime" />
+          <Property Name="LastChangePassword" Type="datetime" />
+          <Property Name="LinkDate" Type="datetime" />
+          <Property Name="Token" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <Association Name="FK_AppTokens_AppUser">
+          <End Role="AppUsers" Type="Self.AppUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AppTokens" Type="Self.AppTokens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppTokens">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppUser_States">
+          <End Role="States" Type="Self.States" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AppUsers" Type="Self.AppUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="States">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppUsers">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContactRequests_States">
+          <End Role="States" Type="Self.States" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ContactRequests" Type="Self.ContactRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="States">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ContactRequests">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contents_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Contents" Type="Self.Contents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contents">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Posts_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Posts">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tokens_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tokens" Type="Self.Tokens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tokens">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ConsoleCmsMasterModelStoreContainer">
+          <EntitySet Name="AppTokens" EntityType="Self.AppTokens" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AppUsers" EntityType="Self.AppUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ASPStateTempApplications" EntityType="Self.ASPStateTempApplications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ASPStateTempSessions" EntityType="Self.ASPStateTempSessions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChangeLog" EntityType="Self.ChangeLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CodigosPostales" EntityType="Self.CodigosPostales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContactRequests" EntityType="Self.ContactRequests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contents" EntityType="Self.Contents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Posts" EntityType="Self.Posts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tokens" EntityType="Self.Tokens" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserProgress" EntityType="Self.UserProgress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AppTokens_AppUser" Association="Self.FK_AppTokens_AppUser">
+            <End Role="AppUsers" EntitySet="AppUsers" />
+            <End Role="AppTokens" EntitySet="AppTokens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppUser_States" Association="Self.FK_AppUser_States">
+            <End Role="States" EntitySet="States" />
+            <End Role="AppUsers" EntitySet="AppUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContactRequests_States" Association="Self.FK_ContactRequests_States">
+            <End Role="States" EntitySet="States" />
+            <End Role="ContactRequests" EntitySet="ContactRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contents_Categories" Association="Self.FK_Contents_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Contents" EntitySet="Contents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Posts_Categories" Association="Self.FK_Posts_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Posts" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tokens_Users" Association="Self.FK_Tokens_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Tokens" EntitySet="Tokens" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ConsoleCmsMasterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AppTokens">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="Flags" Type="Int32" Nullable="false" />
+          <Property Name="Token" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Secret" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ExpiresAt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AppUsers" Relationship="Self.FK_AppTokens_AppUser" FromRole="AppTokens" ToRole="AppUsers" />
+        </EntityType>
+        <EntityType Name="AppUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateId" Type="Int64" Nullable="false" />
+          <Property Name="FbId" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Audience" Type="Int32" Nullable="false" />
+          <Property Name="IsInterested" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastNames" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Extension" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ChildrenCount" Type="Int32" Nullable="false" />
+          <Property Name="LocationCount" Type="Int32" Nullable="false" />
+          <Property Name="LockedAt" Type="DateTime" Precision="3" />
+          <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
+          <Property Name="FechaAviso" Type="DateTime" Precision="3" />
+          <Property Name="EsTitular" Type="Boolean" />
+          <Property Name="IsBlocked" Type="Int32" />
+          <Property Name="ChildrenCount05x" Type="Int32" />
+          <Property Name="ChildrenCount68x" Type="Int32" />
+          <Property Name="ChildrenCount912x" Type="Int32" />
+          <Property Name="ChildrenCount12xx" Type="Int32" />
+          <NavigationProperty Name="AppTokens" Relationship="Self.FK_AppTokens_AppUser" FromRole="AppUsers" ToRole="AppTokens" />
+          <NavigationProperty Name="States" Relationship="Self.FK_AppUser_States" FromRole="AppUsers" ToRole="States" />
+        </EntityType>
+        <EntityType Name="ASPStateTempApplications">
+          <Key>
+            <PropertyRef Name="AppId" />
+          </Key>
+          <Property Name="AppId" Type="Int32" Nullable="false" />
+          <Property Name="AppName" Type="String" MaxLength="280" FixedLength="true" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ASPStateTempSessions">
+          <Key>
+            <PropertyRef Name="SessionId" />
+          </Key>
+          <Property Name="SessionId" Type="String" MaxLength="88" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Expires" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LockDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LockDateLocal" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LockCookie" Type="Int32" Nullable="false" />
+          <Property Name="Timeout" Type="Int32" Nullable="false" />
+          <Property Name="Locked" Type="Boolean" Nullable="false" />
+          <Property Name="SessionItemShort" Type="Binary" MaxLength="7000" FixedLength="false" />
+          <Property Name="SessionItemLong" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Flags" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Color" Type="Int32" />
+          <NavigationProperty Name="Contents" Relationship="Self.FK_Contents_Categories" FromRole="Categories" ToRole="Contents" />
+          <NavigationProperty Name="Posts" Relationship="Self.FK_Posts_Categories" FromRole="Categories" ToRole="Posts" />
+        </EntityType>
+        <EntityType Name="ChangeLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppUserId" Type="Int64" />
+          <Property Name="DateAction" Type="DateTime" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CodigosPostales">
+          <Key>
+            <PropertyRef Name="IdCodigo" />
+          </Key>
+          <Property Name="IdCodigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Codigo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Asentamiento" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="d_tipo_asenta" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Municipio" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Estado" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="d_CP" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="c_estado" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="c_oficina" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="c_CP" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="c_tipo_asenta" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="c_mnpio" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="id_asenta_cpcons" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="d_zona" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="c_cve_ciudad" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ContactRequests">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateId" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Profession" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Mail" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsInterested" Type="Int32" Nullable="false" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="States" Relationship="Self.FK_ContactRequests_States" FromRole="ContactRequests" ToRole="States" />
+        </EntityType>
+        <EntityType Name="Contents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SigninRequired" Type="Int32" />
+          <Property Name="Audience" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Extension" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ThumbExtension" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SmallThumbExtension" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PublishedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Published" Type="Boolean" />
+          <NavigationProperty Name="Categories" Relationship="Self.FK_Contents_Categories" FromRole="Contents" ToRole="Categories" />
+        </EntityType>
+        <EntityType Name="Posts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Audience" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int64" Nullable="false" />
+          <Property Name="IsActive" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Abstract" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Post" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PublishedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Extension" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Published" Type="Boolean" />
+          <NavigationProperty Name="Categories" Relationship="Self.FK_Posts_Categories" FromRole="Posts" ToRole="Categories" />
+        </EntityType>
+        <EntityType Name="States">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="AppUsers" Relationship="Self.FK_AppUser_States" FromRole="States" ToRole="AppUsers" />
+          <NavigationProperty Name="ContactRequests" Relationship="Self.FK_ContactRequests_States" FromRole="States" ToRole="ContactRequests" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Tokens">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Flags" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="Token" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Secret" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ExpiresAt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Tokens_Users" FromRole="Tokens" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="UserProgress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppUserId" Type="Int32" Nullable="false" />
+          <Property Name="Step" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastNames" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LockedAt" Type="DateTime" Precision="3" />
+          <Property Name="Type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastLogin" Type="DateTime" Precision="3" />
+          <Property Name="LastChangePassword" Type="DateTime" Precision="3" />
+          <Property Name="LinkDate" Type="DateTime" Precision="3" />
+          <Property Name="Token" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tokens" Relationship="Self.FK_Tokens_Users" FromRole="Users" ToRole="Tokens" />
+        </EntityType>
+        <Association Name="FK_AppTokens_AppUser">
+          <End Role="AppUsers" Type="Self.AppUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AppTokens" Type="Self.AppTokens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppTokens">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppUser_States">
+          <End Role="States" Type="Self.States" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AppUsers" Type="Self.AppUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="States">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppUsers">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contents_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Contents" Type="Self.Contents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contents">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Posts_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Posts">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContactRequests_States">
+          <End Role="States" Type="Self.States" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ContactRequests" Type="Self.ContactRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="States">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ContactRequests">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tokens_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tokens" Type="Self.Tokens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tokens">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AppTokens" EntityType="Self.AppTokens" />
+          <EntitySet Name="AppUsers" EntityType="Self.AppUsers" />
+          <EntitySet Name="ASPStateTempApplications" EntityType="Self.ASPStateTempApplications" />
+          <EntitySet Name="ASPStateTempSessions" EntityType="Self.ASPStateTempSessions" />
+          <EntitySet Name="Categories" EntityType="Self.Categories" />
+          <EntitySet Name="ChangeLog" EntityType="Self.ChangeLog" />
+          <EntitySet Name="CodigosPostales" EntityType="Self.CodigosPostales" />
+          <EntitySet Name="ContactRequests" EntityType="Self.ContactRequests" />
+          <EntitySet Name="Contents" EntityType="Self.Contents" />
+          <EntitySet Name="Posts" EntityType="Self.Posts" />
+          <EntitySet Name="States" EntityType="Self.States" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Tokens" EntityType="Self.Tokens" />
+          <EntitySet Name="UserProgress" EntityType="Self.UserProgress" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_AppTokens_AppUser" Association="Self.FK_AppTokens_AppUser">
+            <End Role="AppUsers" EntitySet="AppUsers" />
+            <End Role="AppTokens" EntitySet="AppTokens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppUser_States" Association="Self.FK_AppUser_States">
+            <End Role="States" EntitySet="States" />
+            <End Role="AppUsers" EntitySet="AppUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contents_Categories" Association="Self.FK_Contents_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Contents" EntitySet="Contents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Posts_Categories" Association="Self.FK_Posts_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Posts" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContactRequests_States" Association="Self.FK_ContactRequests_States">
+            <End Role="States" EntitySet="States" />
+            <End Role="ContactRequests" EntitySet="ContactRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tokens_Users" Association="Self.FK_Tokens_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Tokens" EntitySet="Tokens" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ConsoleCmsMasterModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="AppTokens">
+            <EntityTypeMapping TypeName="ConsoleCmsMasterModel.AppTokens">
+              <MappingFragment StoreEntitySet="AppTokens">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Flags" ColumnName="Flags" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="Secret" ColumnName="Secret" />
+                <ScalarProperty Name="ExpiresAt" ColumnName="ExpiresAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AppUsers">
+            <EntityTypeMapping TypeName="ConsoleCmsMasterModel.AppUsers">
+              <MappingFragment StoreEntitySet="AppUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="FbId" ColumnName="FbId" />
+                <ScalarProperty Name="Audience" ColumnName="Audience" />
+                <ScalarProperty Name="IsInterested" ColumnName="IsInterested" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LastNames" ColumnName="LastNames" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Extension" ColumnName="Extension" />
+                <ScalarProperty Name="ChildrenCount" ColumnName="ChildrenCount" />
+                <ScalarProperty Name="LocationCount" ColumnName="LocationCount" />
+                <ScalarProperty Name="LockedAt" ColumnName="LockedAt" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="FechaAviso" ColumnName="FechaAviso" />
+                <ScalarProperty Name="EsTitular" ColumnName="EsTitular" />
+                <ScalarProperty Name="IsBlocked" ColumnName="IsBlocked" />
+                <ScalarProperty Name="ChildrenCount05x" ColumnName="ChildrenCount05x" />
+                <ScalarProperty Name="ChildrenCount68x" ColumnName="ChildrenCount68x" />
+                <ScalarProperty Name="ChildrenCount912x" ColumnName="ChildrenCount912x" />
+                <ScalarProperty Name="ChildrenCount12xx" ColumnName="ChildrenCount12xx" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ASPStateTempApplications">
+            <EntityTypeMapping TypeName="ConsoleCmsMasterModel.ASPStateTempApplications">
+              <MappingFragment StoreEntitySet="ASPStateTempApplications">
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="AppName" ColumnName="AppName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ASPStateTempSessions">
+            <EntityTypeMapping TypeName="ConsoleCmsMasterModel.ASPStateTempSessions">
+              <MappingFragment StoreEntitySet="ASPStateTempSessions">
+                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Expires" ColumnName="Expires" />
+                <ScalarProperty Name="LockDate" ColumnName="LockDate" />
+                <ScalarProperty Name="LockDateLocal" ColumnName="LockDateLocal" />
+                <ScalarProperty Name="LockCookie" ColumnName="LockCookie" />
+                <ScalarProperty Name="Timeout" ColumnName="Timeout" />
+                <ScalarProperty Name="Locked" ColumnName="Locked" />
+                <ScalarProperty Name="SessionItemShort" ColumnName="SessionItemShort" />
+                <ScalarProperty Name="SessionItemLong" ColumnName="SessionItemLong" />
+                <ScalarProperty Name="Flags" ColumnName="Flags" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="ConsoleCmsMasterModel.Categories">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChangeLog">
+            <EntityTypeMapping TypeName="ConsoleCmsMasterModel.ChangeLog">
+              <MappingFragment StoreEntitySet="ChangeLog">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AppUserId" ColumnName="AppUserId" />
+                <ScalarProperty Name="DateAction" ColumnName="DateAction" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CodigosPostales">
+            <EntityTypeMapping TypeName="ConsoleCmsMasterModel.CodigosPostales">
+              <MappingFragment StoreEntitySet="CodigosPostales">
+                <ScalarProperty Name="IdCodigo" ColumnName="IdCodigo" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Asentamiento" ColumnName="Asentamiento" />
+                <ScalarProperty Name="d_tipo_asenta" ColumnName="d_tipo_asenta" />
+                <ScalarProperty Name="Municipio" ColumnName="Municipio" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="d_CP" ColumnName="d_CP" />
+                <ScalarProperty Name="c_estado" ColumnName="c_estado" />
+                <ScalarProperty Name="c_oficina" ColumnName="c_oficina" />
+                <ScalarProperty Name="c_CP" ColumnName="c_CP" />
+                <ScalarProperty Name="c_tipo_asenta" ColumnName="c_tipo_asenta" />
+                <ScalarProperty Name="c_mnpio" ColumnName="c_mnpio" />
+                <ScalarProperty Name="id_asenta_cpcons" ColumnName="id_asenta_cpcons" />
+                <ScalarProperty Name="d_zona" ColumnName="d_zona" />
+                <ScalarProperty Name="c_cve_ciudad" ColumnName="c_cve_ciudad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ContactRequests">
+            <EntityTypeMapping TypeName="ConsoleCmsMasterModel.ContactRequests">
+              <MappingFragment StoreEntitySet="ContactRequests">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Profession" ColumnName="Profession" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="IsInterested" ColumnName="IsInterested" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contents">
+            <EntityTypeMapping TypeName="ConsoleCmsMasterModel.Contents">
+              <MappingFragment StoreEntitySet="Contents">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SigninRequired" ColumnName="SigninRequired" />
+                <ScalarProperty Name="Audience" ColumnName="Audience" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Extension" ColumnName="Extension" />
+                <ScalarProperty Name="ThumbExtension" ColumnName="ThumbExtension" />
+                <ScalarProperty Name="SmallThumbExtension" ColumnName="SmallThumbExtension" />
+                <ScalarProperty Name="PublishedAt" ColumnName="PublishedAt" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Posts">
+            <EntityTypeMapping TypeName="ConsoleCmsMasterModel.Posts">
+              <MappingFragment StoreEntitySet="Posts">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Audience" ColumnName="Audience" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Abstract" ColumnName="Abstract" />
+                <ScalarProperty Name="Post" ColumnName="Post" />
+                <ScalarProperty Name="PublishedAt" ColumnName="PublishedAt" />
+                <ScalarProperty Name="Extension" ColumnName="Extension" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="ConsoleCmsMasterModel.States">
+              <MappingFragment StoreEntitySet="States">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ConsoleCmsMasterModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tokens">
+            <EntityTypeMapping TypeName="ConsoleCmsMasterModel.Tokens">
+              <MappingFragment StoreEntitySet="Tokens">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Flags" ColumnName="Flags" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="Secret" ColumnName="Secret" />
+                <ScalarProperty Name="ExpiresAt" ColumnName="ExpiresAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserProgress">
+            <EntityTypeMapping TypeName="ConsoleCmsMasterModel.UserProgress">
+              <MappingFragment StoreEntitySet="UserProgress">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AppUserId" ColumnName="AppUserId" />
+                <ScalarProperty Name="Step" ColumnName="Step" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ConsoleCmsMasterModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LastNames" ColumnName="LastNames" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="LockedAt" ColumnName="LockedAt" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+                <ScalarProperty Name="LastChangePassword" ColumnName="LastChangePassword" />
+                <ScalarProperty Name="LinkDate" ColumnName="LinkDate" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

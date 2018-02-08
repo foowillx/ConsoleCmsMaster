@@ -1,0 +1,140 @@
+﻿@model ConsoleCMS.Models.ViewModels.vmPosts
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+<script>
+    jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+        "date-uk-pre": function (a) {
+            var ukDatea = a.split('/');
+            return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+        },
+
+        "date-uk-asc": function (a, b) {
+            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+        },
+
+        "date-uk-desc": function (a, b) {
+            return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+        }
+    });
+</script>
+
+<h3><i class="fa fa-angle-right"></i> Posts</h3>
+<h4 align="right"><a href="@Url.Action("Form", "Posts")"><span class="glyphicon glyphicon-plus">Agregar</span></a></h4>
+<div class="row mt">
+    <div class="col-md-12">
+        <div class="content-panel">
+
+            <table id="table_id" class="display">
+                <thead>
+                    <tr>
+                        <th>Fecha Pub.</th>
+                        <th>Imagen</th>
+                        <th>¿Publicado?</th>
+                        <th>Audiencia</th>
+                        <th>Categoría</th>
+                        <th>Título</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var reg in Model.AllPosts)
+                        {
+                            <tr>
+                                <td>@reg.PublishedAt.Value.ToString("yyy-MM-dd hh:mm")</td>
+                                <td><img src="@reg.imgUrl" width="57" height="45" style="width: 57px; height: 45px;"></td>
+                                @if (reg.IsActive == 1)
+                                {
+                                    <td><span class="glyphicon glyphicon-ok"></span></td>
+                                }
+                                else
+                                {
+                                    <td><span class="glyphicon glyphicon-remove"></span></td>
+                                }
+
+                                @switch (reg.Audience.Value)
+                                {
+                                    case 1:
+                                        <td>Padre o Madre</td>
+                                        break;
+                                    case 2:
+                                    <td>Director / Maestro</td>
+                                        break;
+                                    default:
+                                    <td>Instructor Nutrir</td>
+                                        break;
+                                }
+                                <td>@reg.Categoria.Name</td>
+                                <td>@reg.Title</td>
+                                <td>
+                                    <button title="Editar" type="button" class="btn btn-default" aria-label="Left Align" onclick="editReg(@reg.Id)"><span class="glyphicon glyphicon-pencil"></span></button>&nbsp;
+                                    <button title="Eliminar" type="button" class="btn btn-default" aria-label="Left Align" onclick="deleteModal('@reg.Id')"><span class="glyphicon glyphicon-trash"></span></button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#table_id').DataTable();
+    });
+
+    function editReg(id){
+        location.href = "Posts/Form?id="+id
+    }
+
+    function deleteModal(id) {
+        $("#btndeleteReg").remove()
+        $("#foot").prepend("<button type='button' class='btn btn-primary' id='btndeleteReg' onclick='deleteReg("+id+")'>Confirmar</button>")
+        $("#deleteModal").modal()
+    }
+
+    function deleteReg(id) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("deletePost", "Posts")',
+            //contentType: "application/json; chartset=utf-8",
+            //dataType: "json",
+            data: { id: id },
+            success: function (result) {
+                location.reload();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert(errorThrown);
+            }
+        })
+    }
+</script>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="deleteModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmar acción</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro que quiere borrar este registtro?</p>
+            </div>
+            <div class="modal-footer" id="foot">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

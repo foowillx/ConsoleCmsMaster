@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3><i class="fa fa-angle-right"></i> Cambiar Contraseña</h3>
+
+<h4 align="right"><a href="@Url.Action("Index", "Home")"><span class="glyphicon glyphicon-chevron-left">Regresar</span></a></h4>
+<!-- BASIC FORM ELELEMNTS -->
+<div class="row mt">
+    <div class="col-lg-12">
+        <div class="form-panel">
+            <h4 class="mb"><i class="fa fa-angle-right"></i> Completa los campos</h4>
+            @using (Html.BeginForm("ChangePassword", "Home", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal style-form", role = "form", id = "UserForm" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">Contraseña Actual</label>
+                    <div class="col-sm-10">
+                        @Html.Password("OldPassword", null, new { @class = "form-control", @required = "required" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">Nueva Contraseña</label>
+                    <div class="col-sm-10">
+                        @Html.Password("Password", null, new { @class = "form-control", @required = "required" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">Confirmar Contraseña</label>
+                    <div class="col-sm-10">
+                        @Html.Password("ConfirmPassword", null, new { @class = "form-control", @required = "required" })
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <label><b>Las contraseñas deben cumplir las siguientes características:</b></label><br />
+                    <p id="requires">*Contener por lo menos 16 caracteres para administradores y 10 caracteres para los demás roles <br /> *Contener por lo menos una mayúscula<br /> *Contener por lo menos una minúscula <br /> *Contener por lo menos un dígito <br /> *Contener por lo menos un caracter especial</p>
+                </div>
+                <button type="button" class="btn btn-theme" id="subMt">Continuar</button>
+            }
+        </div>
+    </div><!-- col-lg-12-->
+</div><!-- /row -->
+
+<script>
+    $("#subMt").on("click", function () {
+        var password = $("#Password").val()
+        var ConfirmPassword = $("#ConfirmPassword").val()
+        var Role = "@ViewBag.Role"
+        debugger;
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ValidatePasswordAndRole", "Users")',
+            //contentType: "application/json; chartset=utf-8",
+            //dataType: "json",
+            data: { Password: password, ConfirmPassword: ConfirmPassword, Role: Role },
+            success: function (result) {
+                if (result == "True") {
+                    $("#UserForm").submit();
+                } else {
+                    alert("Existen errores en la información")
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert(errorThrown);
+            }
+        })
+    })
+</script>
+
+@if (ViewBag.Error == "Error")
+{
+    <script>
+        alert("Existen errores en la información")
+    </script>
+}

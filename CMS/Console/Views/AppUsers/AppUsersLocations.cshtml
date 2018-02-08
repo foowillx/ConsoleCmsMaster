@@ -1,0 +1,144 @@
+﻿@model ConsoleCMS.Models.ViewModels.vmAppUsersLocations
+
+@{
+    ViewBag.Title = "AppUsersLocations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+
+<h3><i class="fa fa-angle-right"></i> Centros Nutrir</h3>
+<h4 align="right"><a href="@Url.Action("Index", "AppUsers")"><span class="glyphicon glyphicon-chevron-left">Regresar</span></a></h4>
+
+<div class="row mt">
+    <div class="col-md-12">
+        <div class="content-panel">
+            <table id="table_id" class="display">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Clave Escolar</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var reg in Model.AllAppUsersLocations)
+                        {
+                            <tr>
+                                <td>@reg.Location.Name</td>
+                                @if (reg.Location.SchoolCode != null && reg.Location.SchoolCode != string.Empty)
+                                {
+                                    <td>@reg.Location.SchoolCode</td>
+                                }
+                                else
+                                {
+                                    <td>-</td>
+                                }
+
+                                <td>
+                                    <button title="Detalles" type="button" onclick="generateModal('@reg.AppUser.UserName','@reg.AppUser.Name','@reg.AppUser.LastNames','@reg.AppUser.Mail','@reg.Location.Name','@reg.Location.state.Name','@reg.Location.Street','@reg.Location.PostalCode','@reg.Location.County','@reg.Location.Neighborhood')" class="btn btn-default" aria-label="Left Align"><span class="glyphicon glyphicon-list-alt"></span></button>&nbsp;
+                                    <button title="Secciones" type="button" class="btn btn-default" aria-label="Left Align" onclick="goToSections('@reg.AppUserId')"><span class="fa fa-book"></span></button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#table_id').DataTable();
+    });
+
+    function goToSections(id) {
+        location.href = "/AppUsers/AppUsersSections?id=" + id
+    }
+
+    function generateModal(username, name, lastname, mail, locname, locstate, locstreet, locCP, locCounty, locNeigh) {
+
+        //AppUser
+        $("#unameP").remove();
+        $("#usernameContainer").append("<text id='unameP'>" + username + "</text>");
+
+        $("#nameP").remove();
+        $("#nameContainer").append("<text id='nameP'>" + name + "</text>");
+
+        $("#lnameP").remove();
+        $("#lastContainer").append("<text id='lnameP'>" + lastname + "</text>");
+
+        $("#mailP").remove();
+        $("#mailContainer").append("<text id='mailP'>" + mail + "</text>");
+
+        //CentroNutrir
+
+        $("#locNameP").remove();
+        $("#locNameContainer").append("<text id='locNameP'>" + locname + "</text>");
+
+        $("#locStateP").remove();
+        $("#locStateContainer").append("<text id='locStateP'>" + locstate + "</text>");
+
+        $("#locStreetP").remove();
+        $("#locStreetContainer").append("<text id='locStreetP'>" + locstreet + "</text>");
+
+        $("#locCPP").remove();
+        $("#locCPContainer").append("<text id='locCPP'>" + locCP + "</text>");
+
+        $("#locCountyP").remove();
+        $("#locCountyContainer").append("<text id='locCountyP'>" + locCounty + "</text>");
+
+        $("#locNeighP").remove();
+        $("#locNeighContainer").append("<text id='locNeighP'>" + locNeigh + "</text>");
+
+        ////Adicionales
+        //$("#cicloP").remove();
+        //$("#cicloContainer").append("<text id='cicloP'>" + ciclo + "</text>");
+
+        //$("#gradoP").remove();
+        //$("#gradoContainer").append("<text id='gradoP'>" + grupo + "</text>");
+
+
+        $("#detailModal").modal();
+    }
+
+</script>
+
+<div class="modal" tabindex="-1" role="dialog" id="detailModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detalle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3>Datos del Usuario</h3>
+                <div id="usernameContainer"><label><b>Nombre de Usuario: </b></label> <p id="unameP">Modal body text goes here.</p></div>
+                <div id="nameContainer"><label><b>Nombre: </b></label> <p id="nameP">Modal body text goes here.</p></div>
+                <div id="lastContainer"><label><b>Apellidos: </b></label> <p id="lnameP">Modal body text goes here.</p></div>
+                <div id="mailContainer"><label><b>Correo: </b></label> <p id="mailP">Modal body text goes here.</p></div>
+
+                <h3>Datos del Centro Nutrir</h3>
+                <div id="locNameContainer"><label><b>Nombre: </b></label> <p id="locNameP">Modal body text goes here.</p></div>
+                <div id="locStateContainer"><label><b>Estado:</b></label> <p id="locStateP">Modal body text goes here.</p></div>
+                <div id="locStreetContainer"><label><b>Calle: </b></label> <p id="locStreetP">Modal body text goes here.</p></div>
+                <div id="locCPContainer"><label><b>Código Postal: </b></label> <p id="locCPP">Modal body text goes here.</p></div>
+                <div id="locCountyContainer"><label><b>Delegación / Municipio:</b></label> <p id="locCountyP">Modal body text goes here.</p></div>
+                <div id="locNeighContainer"><label><b>Colonia: </b></label> <p id="locNeighP">Modal body text goes here.</p></div>
+
+                @*<h3>Datos Adicionales</h3>
+                <div id="cicloContainer"><label><b>Ciclo Escolar:</b></label> <p id="cicloP">Modal body text goes here.</p></div>
+                <div id="gradoContainer"><label><b>Grado y Grupo: </b></label> <p id="gradoP">Modal body text goes here.</p></div>*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+

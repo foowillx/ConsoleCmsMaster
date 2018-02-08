@@ -1,0 +1,135 @@
+﻿@model ConsoleCMS.Models.POCOs.ContentsModel
+
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<ConsoleCMS.Models.POCOs.CategoriesModel> AllCategories = (List<ConsoleCMS.Models.POCOs.CategoriesModel>)ViewBag.Categories;
+
+    bool isNew = false;
+
+}
+
+@if (Model != null)
+{
+    <h3><i class="fa fa-angle-right"></i> Editar Contenido</h3>
+}
+else
+{
+    isNew = true;
+    <h3><i class="fa fa-angle-right"></i> Crear Contenido</h3>
+}
+<h4 align="right"><a href="@Url.Action("Index", "Contents")"><span class="glyphicon glyphicon-chevron-left">Regresar</span></a></h4>
+<!-- BASIC FORM ELELEMNTS -->
+<div class="row mt">
+    <div class="col-lg-12">
+        <div class="form-panel">
+            <h4 class="mb"><i class="fa fa-angle-right"></i> Completa los campos</h4>
+            @using (Html.BeginForm("Form", "Contents", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal style-form", role = "form", id = "UserForm" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">¿Requiere registro?</label>
+                    <div class="col-sm-10">
+                        <select id="SigninRequired" name="SigninRequired" class="form-control" required>
+                            <option value="" disabled selected>Selecciona una opción</option>
+                            <option value="0">No</option>
+                            <option value="1">Si</option>
+                        </select>
+                    </div>
+                </div>
+                @if (Session["Info2"].ToString() == "Administrador")
+                {
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">¿Publicado?</label>
+                        <div class="col-sm-10">
+                            <select id="Published" name="Published" class="form-control" required>
+                                <option value="" disabled selected>Selecciona una opción</option>
+                                <option value="0">No</option>
+                                <option value="1">Si</option>
+                            </select>
+                        </div>
+                    </div>
+                }
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">Audiencia</label>
+                    <div class="col-sm-10">
+                        <select id="Audience" name="Audience" class="form-control" required>
+                            <option value="" disabled selected>Yo soy</option>
+                            <option value="1">Padre o Madre</option>
+                            <option value="2">Maestro o Maestra / Instructor Nutrir</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">Categoria</label>
+                    <div class="col-sm-10">
+                        <select id="CategoryId" name="CategoryId" class="form-control" required>
+                            <option value="" disabled selected>Selecciona una opción</option>
+                            @foreach (var category in AllCategories)
+                            {
+                                <option value="@category.Id">@category.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">Nombre</label>
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @required = "required" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">Descripción</label>
+                    <div class="col-sm-10">
+                        @Html.TextAreaFor(x => x.Description, new { @class = "form-control", @required = "required" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">Imagen (570 x 457 px)</label>
+                    <div class="col-sm-10">
+                        @if (isNew)
+                        {
+                            @Html.TextBoxFor(x => x.imgPost, new { accept = "image/*", type = "file", @class = "form-control", @required = "required" })
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(x => x.imgPost, new { accept = "image/*", type = "file", @class = "form-control" })
+                        }
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">Contenido (Máximo 20MB)</label>
+                    <div class="col-sm-10">
+                        @if (isNew)
+                        {
+                            @Html.TextBoxFor(x => x.contPost, new { type = "file", @class = "form-control", @required = "required" })
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(x => x.contPost, new { type = "file", @class = "form-control" })
+                        }
+
+                    </div>
+                </div>
+
+                if (!isNew)
+                {
+                    @Html.HiddenFor(x => x.Id)
+                }
+                <button type="submit" class="btn btn-theme">Continuar</button>
+            }
+        </div>
+    </div><!-- col-lg-12-->
+</div><!-- /row -->
+@if (!isNew)
+{
+    <script>
+        $("#Audience").val('@Model.Audience')
+        $("#Published").val('@Model.Published')
+        $("#SigninRequired").val('@Model.SigninRequired')
+        $("#CategoryId").val('@Model.CategoryId')
+    </script>
+}

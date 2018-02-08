@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8f4d1a0923414f1d864cb35233a128c5" Name="Diagram1">
+        <EntityTypeShape EntityType="ConsoleCmsMasterModel.AppTokens" Width="1.5" PointX="5.25" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsoleCmsMasterModel.AppUsers" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsoleCmsMasterModel.ASPStateTempApplications" Width="1.5" PointX="9.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsoleCmsMasterModel.ASPStateTempSessions" Width="1.5" PointX="10.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsoleCmsMasterModel.Categories" Width="1.5" PointX="5.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsoleCmsMasterModel.ChangeLog" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsoleCmsMasterModel.CodigosPostales" Width="1.5" PointX="2.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsoleCmsMasterModel.ContactRequests" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsoleCmsMasterModel.Contents" Width="1.5" PointX="8" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsoleCmsMasterModel.Posts" Width="1.5" PointX="8" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsoleCmsMasterModel.States" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsoleCmsMasterModel.sysdiagrams" Width="1.5" PointX="11.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsoleCmsMasterModel.Tokens" Width="1.5" PointX="10" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsoleCmsMasterModel.UserProgress" Width="1.5" PointX="10.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsoleCmsMasterModel.Users" Width="1.5" PointX="7.75" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="ConsoleCmsMasterModel.FK_AppTokens_AppUser" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsoleCmsMasterModel.FK_AppUser_States" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsoleCmsMasterModel.FK_Contents_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsoleCmsMasterModel.FK_Posts_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsoleCmsMasterModel.FK_ContactRequests_States" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsoleCmsMasterModel.FK_Tokens_Users" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

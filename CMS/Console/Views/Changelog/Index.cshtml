@@ -1,0 +1,45 @@
+﻿@model ConsoleCMS.Models.ViewModels.vmChangeLog
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+
+<h3><i class="fa fa-angle-right"></i> Change Log</h3>
+
+<div class="row mt">
+    <div class="col-md-12">
+        <div class="content-panel">
+            <table id="table_id" class="display">
+                <thead>
+                    <tr>
+                        <th>AppUser Id</th>
+                        <th>Fecha</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var reg in Model.AllChangeLog)
+                        {
+                            <tr>
+                                <td>@reg.AppUserId</td>
+                                <td>@reg.DateAction</td>
+                                <td>@reg.Description</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#table_id').DataTable();
+    });
+</script>

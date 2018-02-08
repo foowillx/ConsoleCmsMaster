@@ -1,0 +1,149 @@
+﻿@model ConsoleCMS.Models.POCOs.PostsModel
+
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<ConsoleCMS.Models.POCOs.CategoriesModel> AllCategories = (List<ConsoleCMS.Models.POCOs.CategoriesModel>)ViewBag.Categories;
+    bool isNew = false;
+}
+
+@if (Model != null)
+{
+    <h3><i class="fa fa-angle-right"></i> Editar Post</h3>
+}
+else
+{
+    isNew = true;
+    <h3><i class="fa fa-angle-right"></i> Crear Post</h3>
+}
+<h4 align="right"><a href="@Url.Action("Index", "Posts")"><span class="glyphicon glyphicon-chevron-left">Regresar</span></a></h4>
+<!-- BASIC FORM ELELEMNTS -->
+<div class="row mt">
+    <div class="col-lg-12">
+        <div class="form-panel">
+            <h4 class="mb"><i class="fa fa-angle-right"></i> Completa los campos</h4>
+            @using (Html.BeginForm("Form", "Posts", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal style-form", role = "form", id = "UserForm" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">Audiencia</label>
+                    <div class="col-sm-10">
+                        <select id="Audience" name="Audience" class="form-control" required>
+                            <option value="" disabled selected>Yo soy</option>
+                            <option value="1">Padre o Madre</option>
+                            <option value="2">Maestro o Maestra / Instructor Nutrir</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">Categoria</label>
+                    <div class="col-sm-10">
+                        <select id="CategoryId" name="CategoryId" class="form-control" required>
+                            <option value="" disabled selected>Selecciona una opción</option>
+                            @foreach (var category in AllCategories)
+                            {
+                                <option value="@category.Id">@category.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                @if (Session["Info2"].ToString() == "Administrador")
+                {
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">¿Publicado?</label>
+                        <div class="col-sm-10">
+                            <select id="IsActive" name="IsActive" class="form-control" required>
+                                <option value="" disabled selected>Selecciona una opción</option>
+                                <option value="0">No</option>
+                                <option value="1">Si</option>
+                            </select>
+                        </div>
+                    </div>
+                }
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">Título</label>
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(x => x.Title, new { @class = "form-control", @required = "required" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">Abstract</label>
+                    <div class="col-sm-10">
+                        @Html.TextAreaFor(x => x.Abstract, new { @class = "form-control"})
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">Contenido</label>
+                    <div class="col-sm-10">
+                        @Html.TextAreaFor(x => x.Post, new { @class = "form-control"})
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">Imagen (570 x 457 px)</label>
+                    <div class="col-sm-10">
+                        @if (isNew)
+                        {
+                            @Html.TextBoxFor(x => x.imgPost, new { accept = "image/*", type = "file", @class = "form-control", @required = "required" })
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(x => x.imgPost, new { accept = "image/*", type = "file", @class = "form-control" })
+                        }
+                        
+                    </div>
+                </div>
+
+                if (!isNew)
+                {
+                    @Html.HiddenFor(x => x.Id)
+                }
+                <button type="submit" class="btn btn-theme">Continuar</button>
+            }
+        </div>
+    </div><!-- col-lg-12-->
+</div><!-- /row -->
+@if (!isNew)
+{
+    <script>
+        $("#Audience").val('@Model.Audience')
+        $("#IsActive").val('@Model.IsActive')
+        $("#CategoryId").val('@Model.CategoryId')
+    </script>
+}
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=v303u0vu1ovqrzidiog3ugbuhg0bmfbvdyhrdf16687p7lr4"></script>
+<script>
+    tinymce.init({
+        selector: 'textarea#Post',
+        images_upload_url: "TinyMceUpload",
+        height: 350,
+        menubar: false,
+        plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table contextmenu paste code'
+        ],
+        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media code',
+        content_css: [
+            '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+            '//www.tinymce.com/css/codepen.min.css']
+    });
+</script>
+
+<script>
+    tinymce.init({
+        selector: 'textarea#Abstract',
+        images_upload_url: "TinyMceUpload",
+        height: 350,
+        menubar: false,
+        plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table contextmenu paste code'
+        ],
+        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media code',
+        content_css: [
+            '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+            '//www.tinymce.com/css/codepen.min.css']
+    });
+</script>

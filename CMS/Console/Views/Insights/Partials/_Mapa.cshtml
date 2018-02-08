@@ -1,0 +1,66 @@
+﻿<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqUqSCpxVyzjhc7EuyIRrPZz3DwLW8_yc">
+</script>
+<div id="map_canvas" style="min-width: 350px; height: 350px; max-width: 600px; margin: 0 auto"></div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        Initialize();
+    });
+    function Initialize() {
+        google.maps.visualRefresh = true;
+        var mex = new google.maps.LatLng(21.2740778, -102.046117);
+        var mapOptions = {
+            zoom: 5,
+            center: mex,
+            mapTypeId: google.maps.MapTypeId.G_NORMAL_MAP
+        };
+        
+        var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+
+        $(function () {
+            $.ajax({
+                url: 'Insights/Map',
+                dataType: "json",
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                async: false,
+                processData: false,
+                cache: false,
+                delay: 15,
+                success: function (data) {
+                    var list =jQuery.parseJSON(data);
+                    $.each(list, function (i, item) {
+                        var ilat = parseFloat(item.Lat);
+                        var ilng = parseFloat(item.Lon);
+
+                        var uluru = { lat: ilat, lng: ilng };
+                        var marker = new google.maps.Marker({
+                            'position': uluru,
+                            'map': map,
+                            'title': item.Value
+                        });
+                        marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png')
+
+                        var infowindow = new google.maps.InfoWindow({
+                            content: "<div><h4>" + item.Value + "</div></div>"
+                        });
+
+                        google.maps.event.addListener(marker, 'click', function () {
+                            infowindow.open(map, marker);
+                        });
+                    })
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            });
+        });
+    }
+</script>
+
+
+
+
+

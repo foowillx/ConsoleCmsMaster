@@ -1,0 +1,67 @@
+﻿<div id="ChartTwo" style="min-width: 350px; height: 350px; max-width: 600px; margin: 0 auto"></div>
+<script type="text/javascript">
+
+        $(function () {
+            $.ajax({
+                url: 'Insights/ChartBytype',
+                dataType: "json",
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                async: false,
+                processData: false,
+                cache: false,
+                delay: 15,
+                success: function (data) {
+                     //alert(data);
+                    var series = new Array();
+                    for (var i in data) {
+                        var serie = new Array(data[i].Value, data[i].Item);
+                        series.push(serie);
+                    }
+                    //alert(series);
+                    DrawPieChartTwo(series);
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            });
+        });
+        function DrawPieChartTwo(series) {
+            $('#ChartTwo').highcharts({
+
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: 1, //null,
+                    plotShadow: false,
+                    type: 'pie'
+
+                },
+                title: {
+                    text: ' Tipos de centro  <a href="ChartListado/locations_count_by_category" target="_blank" style="font-size:12px; color:blue;">Descarga CSV</a>'
+                },
+                credits: {
+                    enabled: false
+                },
+                tooltip: {
+                    pointFormat: '{point.y}'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.y}'
+                        }
+                    }
+                },
+                series: [{
+                    type: 'pie',
+                    name: 'Task Status',
+                    data: series
+                }]
+            });
+        }
+</script>
+
+

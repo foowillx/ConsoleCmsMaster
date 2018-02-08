@@ -1,0 +1,162 @@
+﻿@model ConsoleCMS.Models.ViewModels.vmContactRequests
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+
+<h3><i class="fa fa-angle-right"></i> Solicitudes de Contacto</h3>
+
+<div class="row mt">
+    <div class="col-md-12">
+        <div class="content-panel">
+            <table id="table_id" class="display">
+                <thead>
+                    <tr>
+                        <th>Interesado</th>
+                        <th>Nombre</th>
+                        <th>Apellido Paterno</th>
+                        <th>Apellido Materno</th>
+                        <th>Correo</th>
+                        <th>Fecha</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var reg in Model.AllContactRequests)
+                        {
+                            <tr>
+                                @if (reg.IsInterested == 0)
+                                {
+                                    <td><span class="glyphicon glyphicon-ok"></span></td>
+                                }
+                                else
+                                {
+                                    <td><span class="glyphicon glyphicon-remove"></span></td>
+                                }
+                                
+                                <td>@reg.Name</td>
+                                <td>@reg.MiddleName</td>
+                                <td>@reg.LastName</td>
+                                <td>@reg.Mail</td>
+                                <td>@reg.CreatedAt</td>
+                                <td><button title="Detalles" type="button" onclick="generateModal('@reg.Name','@reg.MiddleName','@reg.LastName','@reg.Profession','@reg.Mail','@reg.Comment','@reg.IsInterested.ToString()','@reg.CreatedAt.ToString()')" class="btn btn-default" aria-label="Left Align"><span class="glyphicon glyphicon-list-alt"></span></button>&nbsp;
+                                    <button title="Eliminar" type="button" class="btn btn-default" aria-label="Left Align" onclick="deleteModal('@reg.Id')"><span class="glyphicon glyphicon-trash"></span></button></td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#table_id').DataTable();
+    });
+
+    function generateModal(name, middlename, lastname, profesion, mail, comment, interested, createdat) {
+        $("#nameP").remove();
+        $("#nameContainer").append("<text id='nameP'>" + name + "</text>");
+
+        $("#mnameP").remove();
+        $("#middlenameContainer").append("<text id='mnameP'>" + middlename + "</text>");
+
+        $("#lnameP").remove();
+        $("#lastContainer").append("<text id='lnameP'>" + lastname + "</text>");
+
+        $("#pnameP").remove();
+        $("#profContainer").append("<text id='pnameP'>" + profesion + "</text>");
+
+        $("#cnameP").remove();
+        $("#mailContainer").append("<text id='cnameP'>" + mail + "</text>");
+
+        $("#conameP").remove();
+        $("#commentContainer").append("<p id='conameP'>" + comment + "</p>");
+
+        if (interested === "1") {
+            $("#inameP").remove();
+            $("#interContainer").append("<text id='inameP'> Si </text>");
+        } else {
+            $("#inameP").remove();
+            $("#interContainer").append("<text id='inameP'> No </text>");
+        }
+
+        $("#dnameP").remove();
+        $("#dateContainer").append("<text id='dnameP'>" + createdat + "</text>");
+
+        $("#detailModal").modal();
+    }
+
+    function deleteModal(id) {
+        $("#btndeleteReg").remove()
+        $("#foot").prepend("<button type='button' class='btn btn-primary' id='btndeleteReg' onclick='deleteReg("+id+")'>Confirmar</button>")
+        $("#deleteModal").modal()
+    }
+
+    function deleteReg(id) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("deleteCR", "ContactRequests")',
+            //contentType: "application/json; chartset=utf-8",
+            //dataType: "json",
+            data: { id: id },
+            success: function (result) {
+                location.reload();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert(errorThrown);
+            }
+        })
+    }
+</script>
+
+<div class="modal" tabindex="-1" role="dialog" id="detailModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detalle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="nameContainer"><label><b>Nombre: </b></label> <p id="nameP">Modal body text goes here.</p></div>
+                <div id="middlenameContainer"><label><b>Apellido Paterno: </b></label> <p id="mnameP">Modal body text goes here.</p></div>
+                <div id="lastContainer"><label><b>Apellido Materno: </b></label> <p id="lnameP">Modal body text goes here.</p></div>
+                <div id="profContainer"><label><b>Profesión: </b></label> <p id="pnameP">Modal body text goes here.</p></div>
+                <div id="mailContainer"><label><b>Correo: </b></label> <p id="cnameP">Modal body text goes here.</p></div>
+                <div id="commentContainer"><label><b>Comentario: </b></label> <p id="conameP">Modal body text goes here.</p></div>
+                <div id="interContainer"><label><b>Interesado: </b></label> <p id="inameP">Modal body text goes here.</p></div>
+                <div id="dateContainer"><label><b>Fecha :</b></label> <p id="dnameP">Modal body text goes here.</p></div>  
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="deleteModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmar acción</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro que quiere borrar este registtro?</p>
+            </div>
+            <div class="modal-footer" id="foot">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>

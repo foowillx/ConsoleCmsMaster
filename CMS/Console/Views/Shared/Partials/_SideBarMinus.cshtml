@@ -1,0 +1,54 @@
+﻿<ul class="sidebar-menu" id="nav-accordion">
+
+    <p class="centered"><a href="@Url.Action("Profile","Home")"><img src="Content/Console/assets/img/friends/fr-05.jpg" class="img-circle" width="60"></a></p>
+    <h5 class="centered">@Session["Info"].ToString()</h5>
+
+    <li class="mt">
+        <a href="@Url.Action("Index", "Insights")">
+            <i class="fa fa-bar-chart-o"></i>
+            <span>Insights</span>
+        </a>
+    </li>
+    <li class="sub-menu">
+        <a href="@Url.Action("Index","Posts")">
+            <i class="fa fa-picture-o"></i>
+            <span>Posts</span>
+        </a>
+    </li>
+    <li class="sub-menu">
+        <a href="@Url.Action("Index","Contents")">
+            <i class="fa fa-clipboard"></i>
+            <span>Contenidos</span>
+        </a>
+    </li>
+    <li class="sub-menu">
+        <a href="@Url.Action("Index","ContactRequests")">
+            <i class="fa fa-phone"></i>
+            <span>Solicitudes de Contacto</span>
+        </a>
+    </li>
+    <li class="sub-menu">
+        <a href="@Url.Action("Index","Locations")">
+            <i class="fa fa-map-marker"></i>
+            <span>Centros Nutrir</span>
+        </a>
+    </li>
+    <li class="sub-menu">
+        <a href="@Url.Action("Index","AppUsers")">
+            <i class="fa fa-users"></i>
+            <span>Participantes</span>
+        </a>
+    </li>
+    <li class="sub-menu">
+        <a href="@Url.Action("Index","Survey")">
+            <i class="fa fa-book"></i>
+            <span>Encuestas</span>
+        </a>
+    </li>
+    <li class="sub-menu">
+        <a href="@Url.Action("Profile","Home")">
+            <i class="fa fa-wrench"></i>
+            <span>Ajustes</span>
+        </a>
+    </li>
+</ul>

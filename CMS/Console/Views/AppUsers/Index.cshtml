@@ -1,0 +1,206 @@
+﻿@model ConsoleCMS.Models.ViewModels.vmAppUsers
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/es-do.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<h3><i class="fa fa-angle-right"></i> Participantes</h3>
+
+<div class="row mt">
+    <div class="col-md-12">
+        <div class="content-panel">
+            @using (Html.BeginForm("Index", "AppUsers", FormMethod.Post, new { autocomplete = "off" }))
+            {
+                <div id="searchPanel" class="sfSearch">
+                    @Html.AntiForgeryToken()
+                    @Html.Label("Fecha Inicio")
+                    <div id="min-date">
+                        @Html.TextBoxFor(x => x.MinDate, new { @class = "datepicker" })
+                    </div>
+                    @Html.Label("Fecha Fin")
+                    <div id="max-date">
+                        @Html.TextBoxFor(x => x.MaxDate, new { @class = "datepicker" })
+                    </div>
+                    <input type="submit" class="btn btn-blue-light small" value="Buscar" id="Buscar" />
+                </div>
+            }
+           
+            <select class="selectpicker">
+                <option>Sin filtro</option>
+                <option>Director / Maestro</option>
+                <option>Padre / Madre</option>
+                <option>Instructor Nutrir</option>                
+            </select>
+
+            <table id="table_id" class="display table table-striped">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>UserName</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Correo</th>
+                        <th>Numero de Niñños</th>
+                        <th>Fecha de registro</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var reg in Model.AllAppUsers)
+                        {
+                    <tr>
+                        @switch (reg.Audience)
+                                {
+                                    case 1:
+                                <td>Padre / Madre</td>
+                                        break;
+                                    case 2:
+                                <td>Director / Maestro</td>
+                                        break;
+                                    default:
+                                <td>Instructor Nutrir</td>
+                                        break;
+                                }
+                        <td>@reg.UserName</td>
+                        <td>@reg.Name</td>
+                        <td>@reg.LastNames</td>
+                        <td>@reg.Mail</td>
+                        <td>@reg.ChildrenCount</td>
+                        @if (reg.FechaRegistro != null)
+                                {
+                                <td>@reg.FechaRegistro.Value.ToString("yyy-MM-dd")</td>
+                                }
+                                else
+                                {
+                                <td>Fecha no registrada </td>
+                                }
+
+                        <td>
+                            <button title="Detalles" type="button" onclick="generateModal('@reg.UserName','@reg.Name','@reg.LastNames','@reg.Mail','@reg.State.Name','@reg.Audience','@reg.ChildrenCount','@reg.IsInterested.ToString()')" class="btn btn-default" aria-label="Left Align"><span class="glyphicon glyphicon-list-alt"></span></button>
+                        </td>
+                    </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {        
+        var table = $('#table_id').DataTable();
+        var dt = new Date();
+        $('#min-date').datetimepicker({
+            locale: 'es-do',
+            viewMode: 'years',
+            maxDate: dt,
+            format: "DD/MM/YYYY",
+            allowInputToggle: true
+        });
+
+        $('#max-date').datetimepicker({
+            locale: 'es-do',
+            viewMode: 'years',
+            maxDate: dt,
+            format: "DD/MM/YYYY",
+            allowInputToggle: true
+        });
+
+        $('#MinDate').val('');
+        var MinDate = $('#MinDate').attr('value');
+        $('#MinDate').val(MinDate);
+
+        $('#MaxDate').val('');
+        var MaxDate = $('#MaxDate').attr('value');
+        $('#MaxDate').val(MaxDate);
+
+        $(".selectpicker").change(function () {
+            table.draw();
+        });
+
+        $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+                var search = $("select[class='selectpicker'] option:selected").text();
+                var type = data[0];
+                
+                if (search === type || search ==="Sin filtro") {
+                    return true;                    
+                }
+                return false;
+            }
+        );
+    });
+
+    function generateModal(username, name, lastname, mail, state, audience, childrencount, interested) {
+
+        $("#unameP").remove();
+        $("#usernameContainer").append("<text id='unameP'>" + username + "</text>");
+
+        $("#nameP").remove();
+        $("#nameContainer").append("<text id='nameP'>" + name + "</text>");
+
+        $("#lnameP").remove();
+        $("#lastContainer").append("<text id='lnameP'>" + lastname + "</text>");
+
+        $("#mailP").remove();
+        $("#mailContainer").append("<text id='mailP'>" + mail + "</text>");
+
+        $("#stateP").remove();
+        $("#stateContainer").append("<text id='stateP'>" + state + "</text>");
+
+        $("#audienceP").remove();
+        $("#audienceContainer").append("<text id='audienceP'>" + audience + "</text>");
+
+        $("#childrenP").remove();
+        $("#childrenContainer").append("<text id='childrenP'>" + childrencount + "</text>");
+
+        if (interested === "1") {
+            $("#inameP").remove();
+            $("#interContainer").append("<text id='inameP'> Si </text>");
+        } else {
+            $("#inameP").remove();
+            $("#interContainer").append("<text id='inameP'> No </text>");
+        }
+
+        $("#detailModal").modal();
+    }
+
+    function showLocations(id) {
+        location.href = "AppUsers/AppUsersLocations?id=" + id
+    }
+</script>
+
+<div class="modal" tabindex="-1" role="dialog" id="detailModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detalle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="usernameContainer"><label><b>Nombre de Usuario: </b></label> <p id="unameP">Modal body text goes here.</p></div>
+                <div id="nameContainer"><label><b>Nombre: </b></label> <p id="nameP">Modal body text goes here.</p></div>
+                <div id="lastContainer"><label><b>Apellidos: </b></label> <p id="lnameP">Modal body text goes here.</p></div>
+                <div id="mailContainer"><label><b>Correo: </b></label> <p id="mailP">Modal body text goes here.</p></div>
+                <div id="stateContainer"><label><b>Estado: </b></label> <p id="stateP">Modal body text goes here.</p></div>
+                <div id="audienceContainer"><label><b>Audience: </b></label> <p id="audienceP">Modal body text goes here.</p></div>
+                <div id="childrenContainer"><label><b>Número de niños:</b></label> <p id="childrenP">Modal body text goes here.</p></div>
+                <div id="interContainer"><label><b>¿Interesado en recibir correos?: </b></label> <p id="inameP">Modal body text goes here.</p></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
